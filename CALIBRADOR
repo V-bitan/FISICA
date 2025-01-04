@@ -1,0 +1,96 @@
+import matplotlib.pyplot as plt
+
+# Configuración inicial de las dimensiones del calibrador
+reglilla_length = 120  # Longitud de la reglilla en mm (12 cm)
+nonius_divisions = 10  # Divisiones del nonius
+nonius_length = 9  # Longitud del nonius en mm
+measured_distance = 17.4  # Distancia medida AB = CD = EF
+
+# Crear la figura
+fig, ax = plt.subplots(figsize=(10, 6))
+
+# Dibujar la reglilla principal
+ax.plot([0, reglilla_length], [0, 0], color="black", linewidth=2, label="Reglilla principal")
+for i in range(0, reglilla_length + 1, 10):
+    ax.text(i, -1.5, f"{i}", ha="center", fontsize=8)  # Etiquetas cada cm
+
+# Dibujar divisiones de la reglilla principal
+for i in range(0, reglilla_length + 1, 1):
+    height = 5 if i % 10 == 0 else 3
+    ax.plot([i, i], [0, height], color="black", linewidth=0.8)
+
+# Dibujar la pieza móvil G y el nonius
+nonius_start = measured_distance
+nonius_end = nonius_start + nonius_length
+ax.plot([nonius_start, nonius_end], [8, 8], color="blue", linewidth=2, label="Nonius")
+for i in range(nonius_divisions + 1):
+    x = nonius_start + i * (nonius_length / nonius_divisions)
+    height = 5 if i == 0 else 3
+    ax.plot([x, x], [8, 8 + height], color="blue", linewidth=0.8)
+    if i == 0:
+        ax.text(x, 10, "0", ha="center", fontsize=8, color="blue")
+    elif i == nonius_divisions:
+        ax.text(x, 10, "10", ha="center", fontsize=8, color="blue")
+
+# Dibujar las marcas A, B, C, D, E, F
+marks = {"A": 0, "B": measured_distance, "C": reglilla_length, "D": reglilla_length - (reglilla_length - measured_distance), 
+         "E": 0, "F": measured_distance}
+for mark, x in marks.items():
+    y = 0 if mark in ["A", "B"] else 8 if mark in ["C", "D"] else 4
+    ax.text(x, y - 2, mark, ha="center", fontsize=10, color="red")
+
+# Ajustar la gráfica
+ax.axis("off")
+ax.set_xlim(-5, reglilla_length + 5)
+ax.set_ylim(-5, 20)
+ax.legend(loc="upper right", fontsize=10)
+
+# Mostrar la gráfica
+plt.title("Calibrador Vernier con Medición AB = CD = EF = 17.4 mm", fontsize=12)
+plt.show()
+# Actualizar la distancia medida a 1.74 cm (17.4 mm)
+measured_distance_cm = 1.74  # en cm
+measured_distance = measured_distance_cm * 10  # convertir a mm
+
+# Crear nuevamente la figura actualizada
+fig, ax = plt.subplots(figsize=(10, 6))
+
+# Dibujar la reglilla principal
+ax.plot([0, reglilla_length], [0, 0], color="black", linewidth=2, label="Reglilla principal")
+for i in range(0, reglilla_length + 1, 10):
+    ax.text(i, -1.5, f"{i//10}", ha="center", fontsize=8)  # Etiquetas cada cm
+
+# Dibujar divisiones de la reglilla principal
+for i in range(0, reglilla_length + 1, 1):
+    height = 5 if i % 10 == 0 else 3
+    ax.plot([i, i], [0, height], color="black", linewidth=0.8)
+
+# Dibujar la pieza móvil G y el nonius
+nonius_start = measured_distance
+nonius_end = nonius_start + nonius_length
+ax.plot([nonius_start, nonius_end], [8, 8], color="blue", linewidth=2, label="Nonius")
+for i in range(nonius_divisions + 1):
+    x = nonius_start + i * (nonius_length / nonius_divisions)
+    height = 5 if i == 0 else 3
+    ax.plot([x, x], [8, 8 + height], color="blue", linewidth=0.8)
+    if i == 0:
+        ax.text(x, 10, "0", ha="center", fontsize=8, color="blue")
+    elif i == nonius_divisions:
+        ax.text(x, 10, "10", ha="center", fontsize=8, color="blue")
+
+# Dibujar las marcas A, B, C, D, E, F
+marks = {"A": 0, "B": measured_distance, "C": reglilla_length, "D": reglilla_length - (reglilla_length - measured_distance), 
+         "E": 0, "F": measured_distance}
+for mark, x in marks.items():
+    y = 0 if mark in ["A", "B"] else 8 if mark in ["C", "D"] else 4
+    ax.text(x, y - 2, mark, ha="center", fontsize=10, color="red")
+
+# Ajustar la gráfica
+ax.axis("off")
+ax.set_xlim(-5, reglilla_length + 5)
+ax.set_ylim(-5, 20)
+ax.legend(loc="upper right", fontsize=10)
+
+# Mostrar la gráfica
+plt.title("Calibrador Vernier con Medición AB = CD = EF = 1.74 cm", fontsize=12)
+plt.show()
